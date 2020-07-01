@@ -1,0 +1,54 @@
+{% extends 'master-layout/master-layout.html' %}
+{% block title %}User profile{% endblock %}
+{% load static %}
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/custom/profile.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/custom/all_courses.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <h2>{{ current_user.username }}</h2>
+                    <p class="title">{{ current_user.date_joined }}</p>
+                    <p>{{ current_user.last_login }}</p>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <h3>Uploaded courses</h3>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>URL</th>
+                            <th>Upload date</th>
+                            <th>Modify date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        {% for course in current_user_courses %}
+                            <tr>
+                                <td>{{ course.title }}</td>
+                                <td><a href="{{ course.url }}">Link</a></td>
+                                <td>{{ course.created_at }}</td>
+                                <td>{{ course.updated_at }}</td>
+                                <td>
+                                    {% if course.status %}
+                                        Active
+                                    {% else %}
+                                        Inactive
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'edit_course' course.id %}">Edit</a>
+                                    <a href="{% url 'delete_course' course.id %}">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

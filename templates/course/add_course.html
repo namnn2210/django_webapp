@@ -1,0 +1,17 @@
+{% extends 'master-layout/master-layout.html' %}
+{% block title %}Add new course{% endblock %}
+{% load static %}
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/custom/add_course.css' %}"/>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <div class="row">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+{% endblock %}

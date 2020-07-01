@@ -1,0 +1,54 @@
+{% extends 'master-layout/master-layout.html' %}
+{% block title %}List courses{% endblock %}
+{% load static %}
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'css/custom/all_courses.css' %}">
+{% endblock %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="container">
+            <form method="post" action="search">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="col-lg-5">
+                        <input type="text" name="search" class="form-control" placeholder="Enter title to search..."/>
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="submit" class="btn btn-danger">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div style="overflow-x:auto;">
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>URL</th>
+                    <th>Uploader</th>
+                    <th>Upload date</th>
+                    <th>Modify date</th>
+                    <th>Status</th>
+                </tr>
+                {% for course in courses %}
+                    <tr>
+                        <td>{{ course.title }}</td>
+                        <td><a href="{{ course.url }}">Link</a></td>
+                        <td>{{ course.user }}</td>
+                        <td>{{ course.updated_at }}</td>
+                        <td>{{ course.created_at }}</td>
+                        <td>
+                            {% if course.status %}
+                                Active
+                            {% else %}
+                                Inactive
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        You need to login to see the content.
+    {% endif %}
+
+{% endblock %}

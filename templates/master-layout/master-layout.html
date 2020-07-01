@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"/>
+    <link rel="stylesheet" href="{% static 'fontawesome/css/font-awesome.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/custom/master-layout.css' %}" type="text/css">
+    {% block extrahead %}{% endblock %}
+</head>
+<body>
+<div class="navbar">
+    <a class="active" href="/"><i class="fa fa-fw fa-home"></i> Home</a>
+    <a href="{% url 'all_courses' %}"><i class="fa fa-fw fa-search"></i> Courses</a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'profile' %}">{{ user.username }}</a>
+        <a href="{% url 'add_course' %}">Add new course</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+        <a href="{% url 'register' %}"><i class="fa fa-fw fa-envelope"></i> Register</a>
+        <a href="{% url 'login' %}"><i class="fa fa-fw fa-user"></i> Login</a>
+    {% endif %}
+</div>
+{% block content %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,10 @@
+{% extends 'master-layout/master-layout.html' %}
+{% block title %}Update course{% endblock %}
+{% load static %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit"/>
+    </form>
+{% endblock %}
